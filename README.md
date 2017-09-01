@@ -1,3 +1,3 @@
-# exercicios
+# Exercicios
 
-asd
+exercícios das matérias da graduação e de competições em geral.
