@@ -32,14 +32,13 @@ void qsortDuRafael(int v[], int p, int r){
 	}
 }
 
- 
 int main (){
 	int tam = TAMANHO_VETOR;
 	int v[TAMANHO_VETOR];
 	srand(time(NULL));
 	
 	for(int i = 0 ; i < TAMANHO_VETOR ; i++)
-		v[i] = rand()%10000;
+		v[i] = rand()%10000000;
 	
 	qsortDuRafael(v, 0, TAMANHO_VETOR - 1);
 	
