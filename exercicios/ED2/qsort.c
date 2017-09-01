@@ -4,21 +4,27 @@
 
 #define TAMANHO_VETOR	1000000
 
+void swap(int v[], int a, int b){
+	int aux = v[a];
+	v[a] = v[b];
+	v[b] = aux;
+}
+
 int partition(int v[], int p, int r){
+	int idx = rand()%(r-p)+p;
+	swap(v, idx, r);
+	
 	int pivo = v[r];
+	
 	int i = p-1;
-	int aux;
+	
 	
 	for(int j = p ; j < r ; j++){
 		if(v[j] <= pivo){
-			aux = v[j];
-			v[j] = v[++i];
-			v[i] = aux;
+			swap(v, j, ++i);
 		}
 	}
-	aux = v[++i];
-	v[i] = v[r];
-	v[r] = aux;
+	swap(v, r, ++i);
 	
 	return i;
 }
@@ -38,7 +44,7 @@ int main (){
 	srand(time(NULL));
 	
 	for(int i = 0 ; i < TAMANHO_VETOR ; i++)
-		v[i] = rand()%10000000;
+		v[i] = i;
 	
 	qsortDuRafael(v, 0, TAMANHO_VETOR - 1);
 	
