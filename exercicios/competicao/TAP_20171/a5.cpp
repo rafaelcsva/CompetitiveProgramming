@@ -11,23 +11,23 @@ typedef struct Arvore{
 Arvore arvores[MAXIMO<<3];
 int lazy[MAXIMO<<3];
 
-Arvore Nova(int i){
+Arvore Nova(){
 	Arvore r;
 
-	for(k = 0 ; k < 9 ; k++)
+	for(int k = 0 ; k < 9 ; k++)
 		r.notas[k] = 0;
 
-	r.notas[i] = 1;
+	r.notas[1] = 1;
 
 	return r;
 }
 
 Arvore join(Arvore a, Arvore b){
 	Arvore r;
-	
+
 	for(int i = 0 ; i < 9 ; i++){
-		r.notas[a.notas[i]]++;
-		r.notas[b.notas[i]]++;
+		//printf("a b %d %d\n", a.notas[i], b.notas[i]);
+		r.notas[i] = a.notas[i] + b.notas[i];
 	}
 
 	return r;
@@ -35,20 +35,22 @@ Arvore join(Arvore a, Arvore b){
 
 void Build(int no, int i, int j){
 	if(i == j){
-		arvores[no] = Nova(i);
+		arvores[no] = Nova();
 	}else{
 		int esq = no<<1;
 		int dir = no<<1|1;
 
 		Build(esq, i, (i+j)/2);
 		Build(dir, (i+j)/2 + 1, j);
-
+	
+		//printf("%d %d\n", i, j);
 		arvores[no] = join(arvores[esq], arvores[dir]);
 	}
 }
 
 void next(int no, int p){
 	int l = (lazy[no] + p)%9;
+	printf("next\n");
 
 	if(l > 0){
 		int aux[10];
@@ -153,18 +155,17 @@ int main (){
 	scanf("%d%d", &n, &q);
 	
 	Build(1, 1, n);
+	printf("builded\n");
 	for(int i = 0 ; i < q; i++){
 		int op, a, b;
 
-		scanf("%d%d%d", &op, &a, &b);
+		scanf("%d%d", &a, &b);
 
-		if(op == 0){
-			Update(1, 1, n, a+1, b+1);
-		}
-		else if(op == 1){
-			printf("%d\n", Query(1, 1, n, a+1, b+1).n0);
-		}
+		Update(1, 1, n, a+1, b+1);
 	}
+
+	for(int i = 1; i <= n ; i++)
+		printf("%d\n", maisFrequente(Query(1, 1, n, i, i)));
 
 	return 0;
 }
