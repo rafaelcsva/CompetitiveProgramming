@@ -53,15 +53,22 @@ void next(int no, int p){
 }
 
 Arvore Query(int no, int i, int j, int x, int y){
+	int esq = no<<1;
+	int dir = no<<1|1;
+	
 	if(lazy[no]){
+		int p = lazy[no];
 		next(no, 0);
+
+		if(i != j){
+			lazy[esq] += p;
+			lazy[dir] += p;
+		}
 	}
 
 	if(i >= x && j <= y){
 		return arvores[no];
 	}else{
-		int esq = no<<1;
-		int dir = no<<1|1;
 		int mid = (i+j)/2;
 
 		if(mid >= y){
