@@ -38,7 +38,7 @@ void Build(int no, int i, int j){
 		arvores[no] = Nova();
 	}else{
 		int esq = no<<1;
-		int dir = no<<1|1;
+		int dir = (no<<1)|1;
 
 		Build(esq, i, (i+j)/2);
 		Build(dir, (i+j)/2 + 1, j);
@@ -60,9 +60,11 @@ void next(int no, int p){
 		}
 
 		for(int i = 0 ; i < 9 ; i++){
+		//	printf("%d->%d\n", (i+l)%9, i);
 			arvores[no].notas[(i+l)%9] = aux[i]; 
 		}
 	}
+	lazy[no] = 0;
 	
 }
 
@@ -112,7 +114,7 @@ int maisFrequente(Arvore n){
 	return f;
 }
 
-void Update(int no, int i, int j, int x, int y){
+void Update(int no, int i, int j, int x, int y, int f){
 	int esq = no<<1;
 	int dir = no<<1|1;
 
@@ -131,8 +133,6 @@ void Update(int no, int i, int j, int x, int y){
 		return;
 
 	if(i >= x && j <= y){
-		int f = maisFrequente(arvores[no]);
-
 		next(no, f);
 
 		if(i != j){
@@ -142,9 +142,9 @@ void Update(int no, int i, int j, int x, int y){
 	}else{
 		int mid = (i+j)/2;
 
-		Update(esq, i, mid, x, y);
-
-		Update(dir, mid + 1, j, x, y);
+		Update(esq, i, mid, x, y, f);
+ 
+		Update(dir, mid + 1, j, x, y, f);
 
 		arvores[no] = join(arvores[esq], arvores[dir]);
 	}
@@ -152,6 +152,7 @@ void Update(int no, int i, int j, int x, int y){
 
 int main (){
 	int n, q;
+	
 
 	scanf("%d%d", &n, &q);
 	
@@ -161,12 +162,9 @@ int main (){
 		int a, b;
 
 		scanf("%d%d", &a, &b);
+		int f = maisFrequente(Query(1,1,n, a+1, b+1));
 
-		printf("mais frequente %d %d %d\n", maisFrequente(Query(1, 1, n, a+1, b+1)), a+1, b+1);
-		
-		Update(1, 1, n, a+1, b+1);
-
-		printf("mais frequente %d %d %d\n", maisFrequente(Query(1, 1, n, a+1, b+1)), a+1, b+1);
+		Update(1, 1, n, a+1, b+1, f);
 	}
 
 	for(int i = 1; i <= n ; i++)
