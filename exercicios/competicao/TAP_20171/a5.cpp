@@ -60,7 +60,7 @@ void next(int no, int p){
 		}
 
 		for(int i = 0 ; i < 9 ; i++){
-			arvores[no].notas[i] = aux[(i+l)%9]; 
+			arvores[no].notas[(i+l)%9] = aux[i]; 
 		}
 	}
 	
@@ -162,6 +162,8 @@ int main (){
 
 		scanf("%d%d", &a, &b);
 
+		printf("mais frequente %d %d %d\n", maisFrequente(Query(1, 1, n, a+1, b+1)), a+1, b+1);
+		
 		Update(1, 1, n, a+1, b+1);
 
 		printf("mais frequente %d %d %d\n", maisFrequente(Query(1, 1, n, a+1, b+1)), a+1, b+1);
