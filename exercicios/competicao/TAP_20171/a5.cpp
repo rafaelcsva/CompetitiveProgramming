@@ -26,7 +26,7 @@ Arvore join(Arvore a, Arvore b){
 	Arvore r;
 
 	for(int i = 0 ; i < 9 ; i++){
-		//printf("a b %d %d\n", a.notas[i], b.notas[i]);
+	//	printf("%d %d %d\n",i ,a.notas[i], b.notas[i]);
 		r.notas[i] = a.notas[i] + b.notas[i];
 	}
 
@@ -50,7 +50,7 @@ void Build(int no, int i, int j){
 
 void next(int no, int p){
 	int l = (lazy[no] + p)%9;
-	printf("next\n");
+	//printf("next\n");
 
 	if(l > 0){
 		int aux[10];
@@ -102,6 +102,7 @@ int maisFrequente(Arvore n){
 	int f;
 
 	for(int i = 8 ; i >= 0 ; i--){
+	//	printf("%d > %d (%d)\n", n.notas[i], maior, i);
 		if(n.notas[i] > maior){
 			f = i;
 			maior = n.notas[i];
@@ -114,7 +115,7 @@ int maisFrequente(Arvore n){
 void Update(int no, int i, int j, int x, int y){
 	int esq = no<<1;
 	int dir = no<<1|1;
-	
+
 	if(lazy[no]){
 		int p = lazy[no];
 
@@ -135,8 +136,8 @@ void Update(int no, int i, int j, int x, int y){
 		next(no, f);
 
 		if(i != j){
-			lazy[esq] += 1;
-			lazy[dir] += 1;
+			lazy[esq] += f;
+			lazy[dir] += f;
 		}
 	}else{
 		int mid = (i+j)/2;
@@ -155,13 +156,15 @@ int main (){
 	scanf("%d%d", &n, &q);
 	
 	Build(1, 1, n);
-	printf("builded\n");
+//	printf("builded\n");
 	for(int i = 0 ; i < q; i++){
-		int op, a, b;
+		int a, b;
 
 		scanf("%d%d", &a, &b);
 
 		Update(1, 1, n, a+1, b+1);
+
+		printf("mais frequente %d %d %d\n", maisFrequente(Query(1, 1, n, a+1, b+1)), a+1, b+1);
 	}
 
 	for(int i = 1; i <= n ; i++)
