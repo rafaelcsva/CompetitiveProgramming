@@ -1,3 +1,3 @@
 # Exercicios
 
-exercícios das matérias da graduação e de competições em geral.
+exercícios de competições/ou não.
