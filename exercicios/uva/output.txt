@@ -1,13 +1,22 @@
-37
-44
-49
-3
-49
-0
-0
-58
-42
-58
-58
-58
-57
+Position of player 1 is 100.
+Position of player 2 is 1.
+Position of player 3 is 1.
+Position of player 1 is 100.
+Position of player 2 is 2.
+Position of player 1 is 100.
+Position of player 2 is 2.
+Position of player 1 is 2.
+Position of player 2 is 3.
+Position of player 1 is 22.
+Position of player 1 is 1.
+Position of player 2 is 1.
+Position of player 3 is 1.
+Position of player 4 is 1.
+Position of player 5 is 1.
+Position of player 1 is 1.
+Position of player 2 is 1.
+Position of player 1 is 1.
+Position of player 2 is 1.
+Position of player 1 is 100.
+Position of player 1 is 100.
+
