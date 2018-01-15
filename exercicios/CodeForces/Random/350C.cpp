@@ -1,24 +1,97 @@
 #include <bits/stdc++.h>
 
-int cyclicString(std::string s1) {
+using namespace std;
 
-  for (int answer = 1; answer < s1.size(); answer++) {
-    bool correct = true;
-    for (int position = answer; position < s1.size() - answer; position++) {
-	std::cout << position << ' ' << position + answer << '\n';
-      if (s1[position] != s1[position + answer]) {
-        correct = false;
-        break;
-      }
-    }
-    if (correct) {
-      return answer;
-    }
-  }
-  return s1.size();
+typedef pair<int, int> pii;
+
+vector<pii > points;
+
+int dist(pii a){
+	return abs(a.first) + abs(a.second);
+}
+
+bool compar(pii a, pii b){
+	return dist(a) <= dist(b);
 }
 
 int main (){
-	std:: cout << cyclicString("cabca") << '\n';
+	int n;
+	ios::sync_with_stdio(false);
+
+	cin >> n;
+
+	for(int i = 0 ; i < n ; i++){
+		int x, y;
+
+		cin >> x >> y;
+
+		points.push_back(make_pair(x, y));
+	}
+
+	sort(points.begin(), points.end(), compar);
+
+	int ans = 0;
+
+	for(int i = 0 ; i < n ; i++){
+		int x = points[i].first;
+		int y = points[i].second;
+
+		if(x < 0){
+			ans += 2;
+		}
+
+		if(x > 0){
+			ans += 2;
+		}
+
+		if(y < 0){
+			ans += 2;
+		}
+
+		if(y > 0){
+			ans += 2;
+		}
+
+		ans += 2;
+	}
+
+	cout << ans << '\n';
+
+	for(int i = 0 ; i < n ; i++){
+		int x = points[i].first;
+		int y = points[i].second;
+		
+		if(x < 0){
+			cout << "1 " << abs(x) << " L\n";
+		}
+		if(x > 0){
+			cout << "1 " << x << " R\n";
+		}
+		if(y < 0){
+			cout << "1 " << abs(y) << " D\n";
+		}
+		if(y > 0){
+			cout << "1 " << y << " U\n";
+		}
+
+		cout << "2\n";
+
+		if(y < 0){
+			cout << "1 " << abs(y) << " U\n";
+		}
+		if(y > 0){
+			cout << "1 " << y << " D\n";
+		}
+		if(x < 0){
+			cout << "1 " << abs(x) << " R\n";
+		}
+		if(x > 0){
+			cout << "1 " << x << " L\n";
+		}
+		
+
+		cout << "3\n";
+	}
+			
 	return 0;
 }
