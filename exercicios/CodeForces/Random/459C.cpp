@@ -2,60 +2,57 @@
 
 using namespace std;
 
-typedef long long int	lli;
+const int N = 1010;
 
-bool verify(lli n, lli k, lli d){
-	int i = 1;
-	int tmp = k;
-
+bool verify(int n, int k, int d){
+	int tmp = 1;
+	int i = 0;
+	
 	while(i < d && tmp < n){
-		tmp *= k;
-	}	
-
+		tmp = tmp * k;
+		i++;
+	}
+	
 	return tmp >= n;
 }
+vector<int>numbers[N];
+
+int digts[N];
 
 int main (){
-	lli n, k, d;
-
-	ios::sync_with_stdio(false);
-
-	cin >> n >> k >> d;
-
-	if(verify(n, k, d)){
-		int q = n / k;
-		int r = n % k;
-		int p = k;
-		int bg = k - 1;
+	int n, K, d;
 	
-		for(int i = 0 ; i < d ; i++){
-			bool cat = false;
-
-			for(int j = bg, cnt = 0 ; cnt < n ; j = (j + 1) % k, cnt++){
-				int tmp = 0;
-
-				while(cnt < n && tmp < q){
-					if(j == k && !cat){
-						cat = true;
-						cout << p + 1 << ' ';
-					}else{
-						cout << j + 1 << ' ';
-					}
-
-					tmp++;
-					cnt++;
+	ios::sync_with_stdio(false);
+	
+	cin >> n >> K >> d;
+	
+	if(verify(n, K, d)){
+		for(int k = 0 ; k < n ; k++){
+			for(int i = 0 ; i < d ; i++){
+				numbers[k].push_back(digts[i] + 1);
+					
+				if(i == d - 1){
+					digts[i]++;
 				}
-				cnt--;
 			}
-		
-			cout << '\n';
-			p --;
-			bg = (bg + 1) % k;
+			for(int i = d - 1 ; i >= 0 ; i--){
+			//	cout << digts[i] ;
+				if(digts[i + 1] == K){
+					digts[i]++;
+					digts[i + 1] = 0;
+				}
+				
+			//	cout << " -> " << i << ' ' << digts[i] << '\n';
+			}
 		}
-
+		
+		for(int i = 0 ; i < d ; i++){
+			for(int j = 0 ; j < n ; j++){
+				cout << numbers[j][i] << ' ';
+			}
+			cout << '\n';
+		}
 	}else{
 		cout << "-1\n";
 	}
-
-	return 0;
 }
