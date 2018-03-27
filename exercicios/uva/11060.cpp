@@ -2,45 +2,28 @@
 
 using namespace std;
 
-typedef pair<int, int>	pii;
 const int N = 110;
+int n;
 string s[N];
-vector<int>graph[N], top;
 map<string, int>mp;
-priority_queue<int , vector<int>, greater<int>  >pq;
-int taked[N], in[N];
-int n, m;
+vector<int>graph[N], ord;
+int cor[N];
 
-void bfs(){
-	for(int i = 0 ; i < n ; i++){
-		if(in[i] == 0){
-			pq.push(i);
+void dfs(int x){
+	cor[x] = 1;
+	
+	for(int i = 0 ; i < graph[x].size() ; i++){
+		int v = graph[x][i];
+		
+		if(cor[v] == 0){
+			dfs(v);
 		}
 	}
 	
-	while(!pq.empty()){
-		int u = pq.top();
-		
-		pq.pop();
-		
-		top.push_back(u);
-		
-		for(int i = 0 ; i < graph[u].size(); i++){
-			int v = graph[u][i];
-			
-			in[v]--;
-			
-			if(in[v] == 0){
-				pq.push(v);
-			}
-		}
-		
-	}
+	ord.push_back(x);
 }
 
 int main (){
-	ios::sync_with_stdio(false);
-	
 	int test = 1;
 	
 	while(cin >> n){
@@ -50,36 +33,46 @@ int main (){
 			
 			mp[s[i]] = i;
 		}
-	
+		
+		if(test > 1){
+			cout << '\n';
+		}
+		
+		int m;
+		
 		cin >> m;
 		
 		while(m--){
 			string u, v;
-			
 			cin >> u >> v;
 			
 			graph[mp[u]].push_back(mp[v]);
-			in[mp[v]]++;
 		}
 		
-		bfs();
-
-		cout << "Case #" << test++ << ": Dilbert should drink beverages in this order: " ;		
-		
 		for(int i = 0 ; i < n ; i++){
-			string c = i == n - 1 ? ".\n\n" : " ";
+			if(cor[i] == 0){
+				dfs(i);
+			}
+		}
+		
+		cout << "Case #" << test++ << ": Dilbert should drink beverages in this order: " ;
+		
+		for(int i = n - 1 ; i >= 0 ; i--){
+			string c = i == 0 ? ".\n" : " ";
 			
-			cout << s[top[i]] << c ;
+			cout << s[ord[i]] << c;
 		}
+		
+		ord.clear();
 		
 		for(int i = 0 ; i < n ; i++){
-			taked[i] = 0;
-			in[i] = 0;
 			graph[i].clear();
+			cor[i] = 0;
 		}
 		
-		top.clear();
+		mp.clear();
+		
 	}
-
+	
 	return 0;
 }

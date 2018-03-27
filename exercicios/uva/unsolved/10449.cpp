@@ -7,9 +7,24 @@ typedef pair<int, int>	pii;
 const int N = 210;
 const lli INF = (lli) 1e9;
 vector<pii>edges;
+vector<int>adj[N];
 int n, r, q;
 lli b[N];
 lli dis[N];
+int cor[N];
+
+void mark(int x){
+	cor[x] = 1;
+	dis[x] = -1LL;
+	
+	for(int i = 0 ; i < adj[x].size() ; i++){
+		int v = adj[x][i];
+		
+		if(cor[v] == 0){
+			mark(v);
+		}
+	}
+}
 
 void bellmanford(){
 	for(int i = 1 ; i <= n ; i++)
@@ -23,16 +38,24 @@ void bellmanford(){
 			
 			if(dis[u] == INF)
 				continue;
-				
-			dis[v] = min(dis[v], dis[u] + b[v] - b[u]);
+			
+			lli cost = b[v] - b[u];
+			
+			dis[v] = min(dis[v], dis[u] + cost * cost * cost);
 		}
 	}
 	
 	for(int k = 0 ; k < edges.size() ; k++){
 		int v = edges[k].second, u = edges[k].first;
 		
-		if(dis[v] > dis[u] + b[v] - b[u])
-			dis[v] = -1LL;
+		if(dis[u] == INF)
+			continue;
+			
+		lli cost = b[v] - b[u];
+		
+		if(dis[v] > dis[u] + cost * cost * cost && cor[v] == 0){
+			mark(v);	
+		}
 	}
 	
 }
@@ -41,6 +64,8 @@ int main (){
 	int test = 1;
 	
 	while(cin >> n){
+		memset(cor, 0, sizeof cor);
+		
 		for(int i = 1 ; i <= n ; i++){
 			cin >> b[i];
 		}
@@ -53,7 +78,7 @@ int main (){
 			cin >> u >> v;
 			
 			edges.push_back(make_pair(u, v));
-			//adj[v].push_back(u);
+			adj[u].push_back(v);
 		}
 		
 		cin >> q;
@@ -71,6 +96,10 @@ int main (){
 			}else{
 				cout << dis[v] << '\n';
 			}
+		}
+		
+		for(int i = 1 ; i <= n ; i++){
+			adj[i].clear();
 		}
 		
 		edges.clear();
