@@ -84,7 +84,7 @@
 
     * **Traveling Salesman Problem**
 
-        *[UVA 10496 - Collecting Beepers](https://uva.onlinejudge.org/external/104/10496.pdf)
+        * [UVA 10496 - Collecting Beepers](https://uva.onlinejudge.org/external/104/10496.pdf)
 
 * **Greedy**
 
@@ -108,3 +108,6 @@
 
     * **DAG**
         * [UVA 988 - Many paths, one destination](https://uva.onlinejudge.org/external/9/988.pdf)
+        * [UVA 10401 - Injured Queen Problem](https://uva.onlinejudge.org/external/104/10401.pdf)
+        * [UVA 11957 - Checkers](https://uva.onlinejudge.org/external/119/11957.pdf)
+        * [UVA 11487 - Gathering Food](https://uva.onlinejudge.org/external/114/11487.pdf)

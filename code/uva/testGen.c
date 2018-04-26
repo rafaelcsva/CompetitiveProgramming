@@ -1,8 +1,20 @@
 #include <stdio.h>
 
+const int N = 5000;
+
 int main (){
-    for(int i = 1 ; i <= 1000 ; i++){
-        printf("%d\n", i);
+    printf("%d", N);
+
+    for(int i = 1 ; i <= N ; i++){
+        printf("%d", N - 1 );
+
+        for(int j = 1 ; j <= N ; j++){
+            if(j == i){
+                continue;
+            }
+            printf(" %d", j);
+        }
+        printf("\n");
     }
 
     return 0;

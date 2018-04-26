@@ -2,54 +2,53 @@
 
 using namespace std;
 
-const int N = (int) 1e5 + 10;
+const int N = int(1e5 + 100);
 int a[N];
-int markL[N], markR[N], mark[N];
+int dpL[N], dpR[N];
+int mp[N];
 
 int main (){
 	int n, m;
-	
-	scanf("%d%d", &n, &m);
-	
-	for(int i = 1 ; i <= n ; i++){
-		scanf("%d", &a[i]);
+
+	cin >> n >> m;
+
+	for(int i = 0 ; i < n ; i++){
+		cin >> a[i];
+		mp[i] = i;
 	}
 
-	for(int i = 1 ; i <= n ; i++){
-		if(a[i] < a[i + 1]){
-			mark[i] = 1;
+	for(int i = 1 ; i < n ; i++){
+		if(a[i] >= a[i - 1]){
+			dpL[i] = 1 + dpL[i - 1];
+			mp[i - dpL[i]] = i; 
 		}
 	}
-	
-	for(int i = 1 ; i <= n ; i++){
-		if(mark[i - 1]){
-			markL[i] = i - 1;
-		}else{
-			markL[i] = markL[i - 1];
+
+	for(int i = n - 2 ; i >= 0 ; i--){
+		if(a[i] >= a[i + 1]){
+			dpR[i] = 1 + dpR[i + 1];
 		}
 	}
-	
-	markR[n + 1] = n + 1;
-	
-	for(int i = n ; i >= 1 ; i--){
-		if(mark[i + 1]){
-			markR[i] = i + 1;
-		}else{
-			markR[i] = markR[i + 1];
-		}
-	}
-	
+
 	while(m--){
 		int l, r;
+
+		cin >> l >> r;
+		l--, r--;
 		
-		scanf("%d%d", &l, &r);
-		
-		if(markR[l] < r || markL[r] > l){
-			printf("No\n");
+		int m = mp[l - dpL[l]];
+
+		if(m > r){
+			cout << "Yes" << endl;
+			continue;
+		}
+
+		if(m - dpL[m] <= l && m + dpR[m] >= r){
+			cout << "Yes" << endl;
 		}else{
-			printf("Yes\n");
+			cout << "No" << endl;
 		}
 	}
-	
+
 	return 0;
 }
