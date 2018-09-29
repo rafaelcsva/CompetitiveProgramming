@@ -1,4 +1,4 @@
-# This repository is for keep my codes from online contests and exercises from other sites like uva and uri.
+# This repository is to keep my codes from online contests and exercises from other sites like uva and uri.
 
 ## Here goes one list with some exercises separated by technique i have used to solve them.
 
