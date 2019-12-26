@@ -51,25 +51,30 @@ int main(){
 		scanf("%d %d %d %d", &x, &y, &m, &k);
 		
 		int hx = x;
-		int hy = y ;
+		int hy = y;
 		int half = (x + y) / 2 + ((x + y) & 1);
+		int half1 = (x + y) / 2;
 
-		int lim = 1 << half;
+		int lim = 1 << half1;
 
-		for(int i = 0 ; i < lim ; i++){
-			int one = 0, zero = 0;
+		if(half1){
+			for(int i = 0 ; i < lim ; i++){
+				int one = 0, zero = 0;
 
-			for(int j = 0 ; j < half ; j++){
-				int e = 1 << j;
+				for(int j = 0 ; j < half1 ; j++){
+					int e = 1 << j;
 
-				if(i & e){
-					one++;
-				}else{
-					zero++;
+					if(i & e){
+						one++;
+					}else{
+						zero++;
+					}
 				}
-			}
 
-			tmp1[one][zero].push_back(i % m);
+				tmp1[one][zero].push_back(i % m);
+			}
+		}else{
+			tmp1[0][0].push_back(0);
 		}
 
 		for(int i = 0 ; i <= x ; i++){
@@ -80,14 +85,9 @@ int main(){
 
 		for(int i = 0; i <= hx ; i++){
 			for(int j = 0 ; j <= hy ; j++){
-
-				// printf("%d, %d\n", i, j);
-
 				for(auto d: con[i][j]){
 					tmp[i][j].push_back(d % m);
 				}
-
-				// printf("%d, %d %lu\n", i, j, tmp[i][j].size());
 
 				sort(tmp[i][j].begin(), tmp[i][j].end());
 			}
@@ -108,15 +108,16 @@ int main(){
 
 					int lo = ((k - x) + m) % m;
 					int hi = ((m - 1 - x) % m + m) % m; 
-					// printf("(%d, %d)\n", lo, hi);
+					// printf("(%d, %d) %lu \n", lo, hi, tmp1[nx][ny].size());
 
-					// printf("%d - %d\n", lo, hi);
+					// printf("%d - %d ", lo, hi);
 
 					int lb = lower_bound(tmp1[nx][ny].begin(), tmp1[nx][ny].end(), lo) - tmp1[nx][ny].begin();
 					int hb = upper_bound(tmp1[nx][ny].begin(), tmp1[nx][ny].end(), hi) - tmp1[nx][ny].begin();
 					// printf("%d %d %lu\n", lb, hb);
+					// printf("| %d %d\n", lb, hb);
 
-					if(lb < hb){
+					if(lo <= hi){
 						tot += ll(hb - lb);
 					}else{
 						tot += ll(tmp1[nx][ny].size() - lb + hb);
